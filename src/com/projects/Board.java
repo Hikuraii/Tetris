@@ -6,12 +6,96 @@ import java.awt.*;
 import static java.awt.AWTEventMulticaster.add;
 
 public class Board extends JPanel {
+    public static final int ROWS = 20;
+    public static final int COLS = 10;
+    public int[][] grid = new int[ROWS][COLS];
+
+
+    private void initGrid() {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                this.grid[i][j] = 0;
+            }
+        }
+    }
+
+    public void placeTetromino(Tetromino tetromino) {
+        int[][] shape = tetromino.getShape();
+        for (int y = 0; y < shape.length; y++) {
+            for (int x = 0; x < shape[0].length; x++) {
+                if (shape[y][x] == 1)
+                    this.grid[tetromino.getY() + y][tetromino.getX() + x] = 1;
+
+            }
+        }
+    }
+
+    public int[][] getGrid() {
+        return grid;
+    }
+
+    public boolean canPlace(Tetromino tetromino, int newX, int newY) {
+        int[][] shape = tetromino.getShape();
+        for (int y = 0; y < shape.length; y++) {
+            for (int x = 0; x < shape[0].length; x++) {
+                if (shape[y][x] == 1) {
+                    int boardX = newX + x;
+                    int boardY = newY + y;
+
+                    if (boardY >= ROWS || boardX >= COLS || boardX < 0) {
+                        return false;
+                    }
+                    if (grid[boardY][boardX] == 1 && boardY >= 0) { // WARN: vérfi cond
+                        return false;
+                    }
+
+                }
+
+            }
+        }
+        return true;
+
+
+    }
+
+    public boolean isFullLine(int row) {
+        for (int x = 0; x < COLS; x++) {
+            if (grid[row][x] == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void clearLine(int row) {
+        for (int y = row; y > 0; y--) {
+            grid[y] = grid[y - 1].clone();
+        }
+        grid[0] = new int[COLS];
+    }
+
+
+    public int clearFullLines() {
+        int clearedLines = 0;
+        for (int y = ROWS - 1; y >= 0; y--) {
+            if (isFullLine(y)) {
+                clearLine(y);
+                clearedLines++;
+                y++;
+            }
+        }
+        return clearedLines;
+    }
+
+    /*
+
     public JLabel[][] grid;
-    JLabel labelSquare;
+    JLabel Box;
     private final int rows;
     private final int cols;
 
 
+    /*
     public Board(int rows, int cols) {
 
         this.rows = rows;
@@ -23,20 +107,21 @@ public class Board extends JPanel {
         setBounds(30,10,311, 680);
 
         initGrid();
+        initValueGrid();
     }
 
 
     private void initGrid() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++){
-                labelSquare = new JLabel("", SwingConstants.CENTER);
-                labelSquare.setOpaque(true);
-                labelSquare.setBackground(Color.black);
-                labelSquare.setBorder(BorderFactory.createLineBorder(Color.white));
-                labelSquare.setText("<html><font size ='3' color=white>" + '(' + i + ',' + j + ')');
+                Box = new JLabel("", SwingConstants.CENTER);
+                Box.setOpaque(true);
+                Box.setBackground(Color.black);
+                Box.setBorder(BorderFactory.createLineBorder(Color.white));
+                Box.setText("<html><font size ='3' color=white>" + '(' + i + ',' + j + ')');
 
-                grid[i][j] = labelSquare;
-                add(labelSquare);
+                grid[i][j] = Box;
+                add(Box);
 
             }
         }
@@ -46,7 +131,7 @@ public class Board extends JPanel {
         return this.grid;
     }
 
-    public JLabel getLabelSquare(int row, int col) {
-        return this.grid[row][col];
-    }
+
+
+     */
 }
