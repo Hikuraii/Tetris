@@ -1,8 +1,7 @@
 package com.projects;
 
-import org.w3c.dom.ls.LSOutput;
-
 import javax.swing.*;
+import java.util.Arrays;
 import java.util.Random;
 
 public class GameController {
@@ -10,23 +9,23 @@ public class GameController {
     private Tetromino currentTetromino;
     private Timer timer, timer2;
     private boolean gameOver = false;
-    public int score = 0;
+    public double score , lineCleared;
     private final Runnable repaintCallback;
-
-
-    // gérer le mouvement les pieces avec une vitesse
-    // faire apparaitre une nouvelle piece quand elles sont placé
 
 
     public GameController(Board board, Runnable repaintCallback) {
         this.board = board;
         this.repaintCallback = repaintCallback;
+        this.score = 0;
+        this.lineCleared = 0;
 
         spawnTetromino();
 
         timer = new Timer(500, e -> update());
-        // timer2 = new Timer(1000, e -> timer.setDelay(timer.getDelay()-200));
+        timer2 = new Timer(60000, e -> timer.setDelay(timer.getDelay()-50));
+
         timer.start();
+        timer2.start();
 
 
     }
@@ -36,15 +35,19 @@ public class GameController {
             return ;
         }
 
+        if (timer.getDelay() <= 50)
+            timer2.stop();
         if (board.canPlace(currentTetromino, currentTetromino.getX() , currentTetromino.getY() + 1)) {
             currentTetromino.move(0, 1);
         } else {
             board.placeTetromino(currentTetromino);
-            score += board.clearFullLines();
+            lineCleared += board.clearFullLines();
+            double score = 100 * Math.pow((double)lineCleared, 2);
             spawnTetromino();
             if (!board.canPlace(currentTetromino, currentTetromino.getX(), currentTetromino.getY())) {
                 gameOver = true;
                 timer.stop();
+                timer2.stop();
             }
 
         }
@@ -77,5 +80,43 @@ public class GameController {
         }
     }
 
-    public Tetromino getCurrentTetromino() { return currentTetromino; }
+    public void rotateLeft(){
+        if (board.canRotate(currentTetromino)) {
+            currentTetromino.setRotatedShape(currentTetromino.getRotatedShape());
+            System.out.println(lineCleared);
+
+
+            repaintCallback.run();
+
+
+        }
+
+    }
+    /*
+    public void rotateRight(){  TODO: rotateRight()
+        if (board.canRotate(currentTetromino)) {
+            board.rotateTetromino(currentTetromino);
+            repaintCallback.run();
+        }
+
+
+    }
+
+     */
+
+    public double getScore() { return score;}
+
+    public double getLineCleared() { return lineCleared;}
+
+    public Tetromino getCurrentTetromino() { return currentTetromino;}
+
+
 }
+
+
+
+
+
+
+
+

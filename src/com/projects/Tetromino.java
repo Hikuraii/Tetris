@@ -36,22 +36,24 @@ public class Tetromino {
         this.y = y;
     }
 
+    public int[][] getRotatedShape(){
+        int h = shape.length;
+        int w = shape[0].length;
 
-    /**
-     *
-     * @param piece rotation a 90° => matrice de rotation
-     *          ou on échange juste les axes x et y => pas besoin de faire des produits matriciel
-     * @return
-     */
-    /* public int[][]  rotatePiece(int[][] piece) {
+        int[][] rotatedShape = new int[w][h];
 
-        int[][] R90 = {{0,1},{-1,0}};
+        for (int y = 0; y < h; y++) {
+            for (int x = 0; x < w; x++) {
+                rotatedShape[x][h - 1 - y] = shape[y][x];
+            }
 
-
-        return RotatedPiece;
+        }
+        return rotatedShape;
     }
-    */
 
+    public void setRotatedShape(int[][] rotatedShape){
+        this.shape = rotatedShape;
+    }
 }
 
 

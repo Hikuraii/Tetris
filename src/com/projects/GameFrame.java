@@ -1,6 +1,7 @@
 package com.projects;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class GameFrame extends JFrame {
 
@@ -10,8 +11,10 @@ public class GameFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         GamePanel gamePanel = new GamePanel();
+        TextPanel textPanel = new TextPanel();
 
-        add(gamePanel);
+        add(textPanel, BorderLayout.EAST);
+        add(gamePanel,  BorderLayout.WEST);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
