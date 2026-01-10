@@ -8,7 +8,7 @@ import java.util.Random;
 public class GameController {
     private Board board;
     private Tetromino currentTetromino;
-    private Timer timer;
+    private Timer timer, timer2;
     private boolean gameOver = false;
     public int score = 0;
     private final Runnable repaintCallback;
@@ -25,6 +25,7 @@ public class GameController {
         spawnTetromino();
 
         timer = new Timer(500, e -> update());
+        // timer2 = new Timer(1000, e -> timer.setDelay(timer.getDelay()-200));
         timer.start();
 
 
