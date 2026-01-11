@@ -30,7 +30,7 @@ public class Board extends JPanel {
     }
 
     public void rotateTetromino(Tetromino tetromino) {
-        int[][] shape = tetromino.getRotatedShape();
+        int[][] shape = tetromino.getRotatedShapeL();
         for (int y = 0; y < shape.length; y++) {
             for (int x = 0; x < shape[0].length; x++) {
                 if (shape[y][x] == 1)
@@ -66,8 +66,30 @@ public class Board extends JPanel {
         return true;
     }
 
-    public boolean canRotate(Tetromino tetromino) {
-        int[][] shape = tetromino.getRotatedShape();
+    public boolean canRotateLeft(Tetromino tetromino) {
+        int[][] shape = tetromino.getRotatedShapeL();
+        for (int y = 0; y < shape.length; y++) {
+            for (int x = 0; x < shape[0].length; x++) {
+                if (shape[y][x] == 1) {
+                    int rotatedX = tetromino.getX() + x;
+                    int rotatedY = tetromino.getY() + y;
+
+                    if (rotatedY >= ROWS || rotatedX >= COLS || rotatedX < 0) {
+                        return false;
+                    }
+                    if (grid[rotatedY][rotatedX] == 1 && rotatedY >= 0) {
+                        return false;
+                    }
+
+                }
+
+            }
+        }
+        return true;
+    }
+
+    public boolean canRotateRight(Tetromino tetromino) {
+        int[][] shape = tetromino.getRotatedShapeR();
         for (int y = 0; y < shape.length; y++) {
             for (int x = 0; x < shape[0].length; x++) {
                 if (shape[y][x] == 1) {

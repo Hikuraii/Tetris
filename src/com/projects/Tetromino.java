@@ -36,19 +36,36 @@ public class Tetromino {
         this.y = y;
     }
 
-    public int[][] getRotatedShape(){
+    public int[][] getRotatedShapeR(){
         int h = shape.length;
         int w = shape[0].length;
 
-        int[][] rotatedShape = new int[w][h];
+        int[][] rotatedShapeR = new int[w][h];
+
 
         for (int y = 0; y < h; y++) {
             for (int x = 0; x < w; x++) {
-                rotatedShape[x][h - 1 - y] = shape[y][x];
+                rotatedShapeR[x][h - 1 - y] = shape[y][x];
+
             }
 
         }
-        return rotatedShape;
+        return rotatedShapeR;
+    }
+
+    public int[][] getRotatedShapeL(){
+        int h = shape.length;
+        int w = shape[0].length;
+
+        int[][] rotatedShapeL = new int[w][h];
+
+        for (int y = 0; y < h; y++) {
+            for (int x = 0; x < w; x++) {
+                rotatedShapeL[w - 1 - x][y] = shape[y][x];
+            }
+
+        }
+        return rotatedShapeL;
     }
 
     public void setRotatedShape(int[][] rotatedShape){

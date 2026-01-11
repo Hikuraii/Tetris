@@ -80,25 +80,24 @@ public class GameController {
     }
 
     public void rotateLeft(){
-        if (board.canRotate(currentTetromino)) {
-            currentTetromino.setRotatedShape(currentTetromino.getRotatedShape());
+        if (board.canRotateLeft(currentTetromino)) {
+            currentTetromino.setRotatedShape(currentTetromino.getRotatedShapeL());
             repaintCallback.run();
 
 
         }
 
     }
-    /*
-    public void rotateRight(){  TODO: rotateRight()
-        if (board.canRotate(currentTetromino)) {
-            board.rotateTetromino(currentTetromino);
+
+    public void rotateRight(){
+        if (board.canRotateRight(currentTetromino)) {
+            currentTetromino.setRotatedShape(currentTetromino.getRotatedShapeR());
             repaintCallback.run();
         }
 
 
     }
 
-     */
 
     public double getScore() { return score;}
 

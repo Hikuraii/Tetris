@@ -69,9 +69,7 @@ public class GamePanel extends JPanel implements KeyListener {
             case KeyEvent.VK_RIGHT -> controller.moveRight();
             case KeyEvent.VK_SPACE -> controller.moveDown();
             case KeyEvent.VK_UP -> controller.rotateLeft();
-            /*
             case KeyEvent.VK_DOWN -> controller.rotateRight();
-             */
         }
     }
 
