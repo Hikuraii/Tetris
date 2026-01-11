@@ -4,19 +4,23 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
 
 public class GamePanel extends JPanel implements KeyListener {
     private static final int TILE = 30;
     private final Board board = new Board();
     private final GameController controller;
-    public JLabel scoreLabel = new JLabel(), lineLabel = new JLabel();
+    private Timer timer;
+    public DecimalFormat decimalFormat;
 
     public GamePanel() {
         setPreferredSize(new Dimension(Board.COLS * TILE, Board.ROWS * TILE));
         setFocusable(true);
-        setBackground(new Color(51, 1, 1, 190));
         addKeyListener(this);
         controller = new GameController(board, this::repaint);
+        this.timer = new Timer(500, e -> textUpdate());
+        timer.start();
     }
 
     @Override
@@ -52,6 +56,7 @@ public class GamePanel extends JPanel implements KeyListener {
         }
 
     }
+
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -74,6 +79,15 @@ public class GamePanel extends JPanel implements KeyListener {
     public void keyReleased(KeyEvent e) {
 
     }
+
+    public void textUpdate() {
+        decimalFormat = new DecimalFormat("#");
+        TextPanel.lineLabel.setText("Line cleared: " + decimalFormat.format(controller.getLineCleared()));
+        TextPanel.scoreLabel.setText("Score: " + decimalFormat.format(controller.getScore()));
+        timer.setDelay(controller.timer.getDelay());
+        if (controller.gameOver) {
+            timer.stop();
+        }
     /*
     public Color tetrominoColor(Tetromino t) {
         t.getColor();
@@ -81,4 +95,5 @@ public class GamePanel extends JPanel implements KeyListener {
     }
 
      */
+    }
 }

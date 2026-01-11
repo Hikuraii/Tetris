@@ -1,29 +1,26 @@
 package com.projects;
 
 import javax.swing.*;
-import java.util.Arrays;
 import java.util.Random;
 
 public class GameController {
     private Board board;
     private Tetromino currentTetromino;
-    private Timer timer, timer2;
-    private boolean gameOver = false;
-    public double score , lineCleared;
+    public Timer timer, timer2;
+    public boolean gameOver = false;
+    public double  score, lineCleared, previousLineCleared;
     private final Runnable repaintCallback;
+
 
 
     public GameController(Board board, Runnable repaintCallback) {
         this.board = board;
         this.repaintCallback = repaintCallback;
-        this.score = 0;
-        this.lineCleared = 0;
 
         spawnTetromino();
 
-        timer = new Timer(500, e -> update());
         timer2 = new Timer(60000, e -> timer.setDelay(timer.getDelay()-50));
-
+        timer = new Timer(500, e -> update());
         timer.start();
         timer2.start();
 
@@ -42,7 +39,9 @@ public class GameController {
         } else {
             board.placeTetromino(currentTetromino);
             lineCleared += board.clearFullLines();
-            double score = 100 * Math.pow((double)lineCleared, 2);
+            if (lineCleared != previousLineCleared)
+                score += 100 * Math.pow(lineCleared - previousLineCleared, 2);
+            previousLineCleared = lineCleared;
             spawnTetromino();
             if (!board.canPlace(currentTetromino, currentTetromino.getX(), currentTetromino.getY())) {
                 gameOver = true;
@@ -83,9 +82,6 @@ public class GameController {
     public void rotateLeft(){
         if (board.canRotate(currentTetromino)) {
             currentTetromino.setRotatedShape(currentTetromino.getRotatedShape());
-            System.out.println(lineCleared);
-
-
             repaintCallback.run();
 
 

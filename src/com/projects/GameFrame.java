@@ -7,7 +7,7 @@ public class GameFrame extends JFrame {
 
 
     public GameFrame() {
-        setTitle("Mon Jeu");
+        setTitle("Tetris");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         GamePanel gamePanel = new GamePanel();
