@@ -7,7 +7,7 @@ import java.util.Date;
 public class Main {
     private Date date;
     static void main() {
-       GameFrame frame = new GameFrame();
+       StartFrame frame = new StartFrame();
 
 
     }

@@ -5,8 +5,8 @@ import java.awt.*;
 
 public class GameFrame extends JFrame {
 
-
     public GameFrame() {
+
         setTitle("Tetris");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
