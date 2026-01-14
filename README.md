@@ -1,12 +1,6 @@
 # TETRIS
 
-+ use arrow key to go left,right and rotate left and right (up and down)
-+ use space to go down faster
-
-
-
-
-ce ke je doa fèr (deu point):
+todo list:
 + GamePanel.java et GameController.java
   + faire en sorte que la couleur reste quand la pièce est placé
   + ajouter un "TES NUUUUUUL" quand tu perds
